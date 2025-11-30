@@ -154,7 +154,5 @@ Este projeto tem potencial para expansão nas seguintes áreas:
 * **Relatório Automático de Regressão:** Integrar uma ferramenta (ex: Newman + HTML Reporter) para gerar relatórios de testes de regressão automaticamente.
 * **Melhorar Validação de Campos (API):** Adicionar validações mais robustas na API (ex: Joi/Express-validator) e cobrir esses novos cenários nos testes do Postman.
 
-### 🔍 Funcionalidades da API
-* **Implementar Filtros:** Adicionar endpoints para filtrar bugs por **prioridade** e **status**, melhorando a usabilidade da API.
 
 
