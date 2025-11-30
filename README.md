@@ -11,12 +11,12 @@ O objetivo é demonstrar habilidades práticas de um QA moderno, integrando aná
 
 ---
 
-## 📌 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 | Diretório | Conteúdo Principal | Descrição |
 | :--- | :--- | :--- |
-| `/api` | `index.js`, `package.json` | Código da API (Node + Express) |
-| `/postman` | `bugs_api_collection.json` | Collection com requests e scripts de teste Postman |
+| [**/api**](bugtracker-api) | `index.js`, `package.json` | Código da API (Node + Express) |
+| [**/postman**](postman/collections) | `bugs_api_collection.json` | Collection com requests e scripts de teste Postman |
 | `README.md` | Este arquivo | Documentação e guia do projeto |
 
 ---
