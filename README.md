@@ -81,7 +81,7 @@ Foco em desafiar a API além dos casos previstos:
 
 ### 🔹 Testes Regressivos
 Foco em manter a estabilidade da aplicação:
-* Reexecutar toda a coleção de testes de forma automática.
+* Reexecução de todos os testes após qualquer alteração.
 * Garantir que novas funcionalidades ou correções (`bug fixes`) não introduziram falhas em partes já testadas do sistema.
 
 ---
