@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "49924048-5890ecda-d2b5-4e1f-8fec-1d5d1e0a0205",
+		"name": "🟦 Bugs API — Testes QA",
+		"description": "├── POST Criar Bug  \n├── GET Listar Bugs  \n├── GET Buscar Bug por ID  \n├── PUT Atualizar Bug  \n├── DELETE Remover Bug",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Criar Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1e720559-b6b2-4fb9-9035-137c9a908b3a",
+						"exec": [
+							"pm.test(\"Status é 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta contém ID\", function () {\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json.id).to.exist;\r",
+							"    // ESSA LINHA salva o ID do bug recém-criado na variável 'bugId' do seu ambiente!\r",
+							"    pm.environment.set(\"bugId\", json.id); \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "49924048-ad1afb3c-5bd2-4d80-b25d-232b83ec635d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titulo\": \"Bug exemplo\",\r\n  \"descricao\": \"Descrição do bug\",\r\n  \"prioridade\": \"alta\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				},
+				"description": "# 🐞 POST /bugs - **Criação de Novo Bug**\n\n**Descrição:** Este endpoint é responsável por registrar um novo bug no sistema.\n\n### **➡️ Corpo da Requisição:**\n\n{  \n\"titulo\": \"Erro ao logar\",  \n\"descricao\": \"Tela branca após inserir login e senha\",  \n\"prioridade\": \"alta\"  \n}\n\n### ✅ **Retorno esperado (201 Created):**\n\n{  \n\"id\": 1,  \n\"titulo\": \"Erro ao logar\",  \n\"descricao\": \"Tela branca após inserir login e senha\",  \n\"prioridade\": \"alta\",  \n\"status\": \"aberto\",  \n\"criadoEm\": \"2025-11-29T21:24:52.801Z\"  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Bugs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b8942c1-7c80-4f1f-8668-78cece0b4865",
+						"exec": [
+							"pm.test(\"Status é 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta é uma lista\", () => {\r",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "49924048-36e051c1-4b66-4125-923d-957b76c11d82",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				},
+				"description": "# **📌 GET /bugs — Listar Bugs**\n\n**Descrição:**\n\nRetorna todos os bugs cadastrados.\n\n### **✅ Retorno esperado (200 OK):**\n\nA resposta é uma **lista (array)** de objetos Bug.\n\n\\[  \n{  \n\"id\": 1,  \n\"titulo\": \"Erro ao logar\",  \n\"descricao\": \"Tela branca ao fazer login\",  \n\"prioridade\": \"alta\",  \n\"status\": \"aberto\",  \n\"criadoEm\": \"2025-11-29T21:24:52.801Z\"  \n}  \n\\]"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Bug por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "04ffe39e-442a-467e-9317-656e8ad8768d",
+						"exec": [
+							"pm.test(\"Status é 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ID retornado é o mesmo salvo\", () => {\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json.id).to.eql(parseInt(pm.environment.get(\"bugId\")));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "49924048-3374dac1-df98-4a16-aa53-b770800cc999",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{bugId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{bugId}}"
+					]
+				},
+				"description": "# **🔍 GET /bugs/:id — Buscar Bug por ID**\n\n**Descrição:**\n\nRetorna um bug específico através do ID\n\nParâmetro de URL\n\n| **Parâmetro** | **Tipo** | **Exemplo** | **Descrição** |\n| --- | --- | --- | --- |\n| id | integer | `/bugs/1` | O ID único do bug a ser buscado. |\n\n### **✅ Retorno esperado (200 OK):**\n\n{  \n\"id\": 1,  \n\"titulo\": \"Erro ao logar\",  \n\"descricao\": \"Tela branca ao fazer login\",  \n\"prioridade\": \"alta\",  \n\"status\": \"aberto\",  \n\"criadoEm\": \"2025-11-29T21:24:52.801Z\"  \n}\n\n### ❌ Resposta de Erro (404 Not Found)\n\n{  \n\"error\": \"Bug não encontrado\"  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "023b3880-d55f-4c20-a9d2-c45061eac5af",
+						"exec": [
+							"pm.test(\"Status é 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "49924048-11bf20ad-c80b-4ba4-809d-93ef5a679c6c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": \"em progresso\",\r\n  \"prioridade\": \"media\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{bugId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{bugId}}"
+					]
+				},
+				"description": "# ✏️ PUT /bugs/:id - Atualizar Bug\n\n**Descrição:** Atualiza os dados de um bug existente, identificado pelo seu ID. Apenas os campos enviados no corpo da requisição serão modificados.\n\n### ➡️ Corpo da Requisição:\n\n\"status\": \"em progresso\",  \n\"prioridade\": \"media\"\n\n### ✅ Resposta de Sucesso (200 OK)\n\nRetorna o objeto Bug completo com os dados atualizados.\n\n{  \n\"id\": 1,  \n\"titulo\": \"Erro ao logar\",  \n\"descricao\": \"Tela branca ao fazer login\",  \n\"prioridade\": \"media\",  \n\"status\": \"em progresso\",  \n\"criadoEm\": \"2025-11-29T21:24:52.801Z\"  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Remover Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b2652b7-ed46-4b26-9ac6-7fe9e4b5c20b",
+						"exec": [
+							"pm.test(\"Status é 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Este teste limpa a variável 'bugId' depois de deletar o bug!\r",
+							"pm.environment.unset(\"bugId\");"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "49924048-e0d7210b-0ea9-4fd3-959f-e8dc76f334d6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"status\": \"em progresso\",\r\n  \"prioridade\": \"media\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/{{bugId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{bugId}}"
+					]
+				},
+				"description": "## 🗑️ DELETE /bugs/:id - Remover Bug\n\n**Descrição:** Remove um bug existente do sistema, identificado pelo seu ID único.\n\n### ✅ Resposta de Sucesso (200 OK)\n\nConfirmação de que o bug foi removido com sucesso.\n\n{  \n\"message\": \"Bug removido com sucesso\"  \n}\n\n### ❌ Resposta de Erro (404 Not Found)\n\nRetornado se o ID do bug não for encontrado no sistema.\n\n{  \n\"error\": \"Bug não encontrado\"  \n}"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c94e7ef7-5bca-4f15-ab02-534a1ead44d1",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d48c0461-4e75-45d6-8e15-bdbb3dc69b49",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
